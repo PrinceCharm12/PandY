@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HERO: two clocks, one for each of you. Names and time zones are set in script.js -->
+  <header class="hero">
+    <div class="side" id="meSide">
+      <img class="avatar" id="mePhoto" alt="" hidden>
+      <h1 id="meName">Me</h1>
+      <p class="place" id="mePlace"></p>
+      <p class="time" id="meTime">--:--</p>
+      <p class="day" id="meDay"></p>
+    </div>
+    <div class="between">
+      <span id="gap"></span>
+    </div>
+    <div class="side" id="herSide">
+      <img class="avatar" id="herPhoto" alt="" hidden>
+      <h1 id="herName">Her</h1>
+      <p class="place" id="herPlace"></p>
+      <p class="time" id="herTime">--:--</p>
+      <p class="day" id="herDay"></p>
+    </div>
+  </header>
+
+  <main>
+    <section class="counters">
+      <div>
+        <p class="big" id="daysTogether">0</p>
+        <p>days together</p>
+      </div>
+      <div>
+        <p class="big" id="herBday">0</p>
+        <p id="herBdayLabel"></p>
+      </div>
+      <div>
+        <p class="big" id="meBday">0</p>
+        <p id="meBdayLabel"></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Tonight</h2>
+      <p class="hint">Can't decide? Let the site pick from everything not yet done.</p>
+      <div class="pickrow">
+        <button data-pick="movies">Pick a movie</button>
+        <button data-pick="games">Pick a game</button>
+      </div>
+      <p class="pick" id="pickResult" aria-live="polite"></p>
+    </section>
+
+    <section class="two">
+      <div>
+        <h2>Movie list</h2>
+        <form class="add" data-list="movies">
+          <input type="text" placeholder="Add a movie" aria-label="Add a movie" required>
+          <button>Add</button>
+        </form>
+        <ul id="movies"></ul>
+      </div>
+      <div>
+        <h2>Game list</h2>
+        <form class="add" data-list="games">
+          <input type="text" placeholder="Add a game" aria-label="Add a game" required>
+          <button>Add</button>
+        </form>
+        <ul id="games"></ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Games</h2>
+      <p class="hint">Choose your player</p>
+      <div class="chars" id="chars" role="group" aria-label="Choose your player"></div>
+      <div class="tabs" role="group" aria-label="Choose a game">
+        <button data-game="shooter" aria-pressed="true">Zombie shooter</button>
+        <button data-game="jump" aria-pressed="false">Sky jump</button>
+        <button data-game="run" aria-pressed="false">Night run</button>
+      </div>
+
+      <form class="cheat" id="cheatForm" autocomplete="off">
+        <input type="text" id="cheatInput" placeholder="Cheat code" aria-label="Cheat code" maxlength="12" autocapitalize="characters" autocorrect="off" spellcheck="false">
+        <button>Apply</button>
+      </form>
+      <p class="hint" id="cheatStatus" aria-live="polite"></p>
+
+      <div data-panel="shooter">
+        <p class="hint">Aim with your finger or the mouse and hold to shoot. On a keyboard use A / D or the arrow keys to turn and Space to fire. A boss appears every few hundred points and each one is tougher than the last. Grab the glowing orbs it drops for buffs.</p>
+        <div class="hud">
+          <p>Score <strong id="zScore">0</strong></p>
+          <p>Best <strong id="zHigh">0</strong></p>
+          <p>Lives <strong id="zLives" aria-label="Lives left">3</strong></p>
+          <button id="zStart">Start</button>
+        </div>
+        <canvas id="zCanvas" width="640" height="420" aria-label="Zombie shooter game"></canvas>
+      </div>
+
+      <div data-panel="jump" hidden>
+        <p class="hint">Drag your finger left and right to steer (or use the mouse, A / D or the arrow keys). You bounce by yourself. The higher you climb, the narrower, slipperier and more crumbly the platforms get. At 100 m a ghost boss blocks the way, and another one every 100 m after that, each tougher than the last. You shoot automatically, so line up under it and dodge its fireballs. Grab the glowing orbs for buffs.</p>
+        <div class="hud">
+          <p>Height <strong id="jScore">0 m</strong></p>
+          <p>Best <strong id="jHigh">0 m</strong></p>
+          <p>Level <strong id="jLevel">Easy</strong></p>
+          <button id="jStart">Start</button>
+        </div>
+        <canvas id="jCanvas" width="360" height="540" aria-label="Sky jump game"></canvas>
+      </div>
+
+      <div data-panel="run" hidden>
+        <p class="hint">Tap to jump and hold to jump higher (Space or the up arrow on a keyboard). Jump the tombstones, but stay on the ground when a bat flies by. It speeds up the longer you run. Every 500 points a boss attacks, tougher each time: each throw you dodge wears it down. Run into or jump for the glowing orbs to get buffs.</p>
+        <div class="hud">
+          <p>Score <strong id="rScore">0</strong></p>
+          <p>Best <strong id="rHigh">0</strong></p>
+          <button id="rStart">Start</button>
+        </div>
+        <canvas id="rCanvas" width="640" height="320" aria-label="Night run game"></canvas>
+      </div>
+    </section>
+
+    <section>
+      <h2>Join us</h2>
+      <p class="hint">Quick links for movie and game nights. Edit them in script.js.</p>
+      <p class="links" id="links"></p>
+    </section>
+
+    <section>
+      <h2>Reasons I love you</h2>
+      <blockquote id="reason"></blockquote>
+      <button id="nextReason">Show another</button>
+    </section>
+  </main>
+
+  <footer><p id="footer"></p></footer>
+
+  <!-- Pop-up shown when a random movie or game is picked -->
+  <div class="modal" id="pickModal" hidden>
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="pickKind">
+      <p class="kicker" id="pickKind"></p>
+      <p class="winner" id="pickWinner" aria-live="polite"></p>
+      <div class="pickrow">
+        <button id="pickAgain">Pick again</button>
+        <button id="pickClose" class="ghost">Sounds good</button>
+      </div>
+    </div>
+  </div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="toast" id="cheatToast" role="status" aria-live="polite" hidden></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
